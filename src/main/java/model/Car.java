@@ -11,5 +11,5 @@ import java.util.List;
 @NoArgsConstructor
 public class Car {
     private int numOfStreets;
-    private List<String> streetsToTravel;
+    private List<Street> streetsToTravel;
 }

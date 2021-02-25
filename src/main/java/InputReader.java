@@ -7,9 +7,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -40,6 +38,9 @@ public class InputReader {
                     );
                 }).collect(Collectors.toList());
 
+        Map<String, Street> streetsByName = new HashMap<>();
+        streets.forEach(street -> streetsByName.put(street.getName(), street));
+
         if (numOfStreets > 0) {
             strings.subList(0, numOfStreets).clear();
         }
@@ -49,7 +50,7 @@ public class InputReader {
             final var numOfStreetsForCar = Integer.parseInt(s1.get(0));
             return new Car(
                     numOfStreetsForCar,
-                    s1.subList(1, s1.size())
+                    s1.subList(1, s1.size()).stream().map(streetsByName::get).collect(Collectors.toList())
             );
         }).collect(Collectors.toList());
 
