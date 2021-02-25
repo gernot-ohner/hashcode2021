@@ -26,8 +26,8 @@ public class OutputWriter {
             fw.write(schedule.getIntersection().getId() + "\n");
             fw.write(schedule.getScheduleEntries().size() + "\n");
             final var bookString = schedule.getScheduleEntries().stream()
-                        .map(se -> String.format("%s %d", se.getStreet().getName(), se.getGreenDuration()))
-                        .collect(Collectors.joining("\n"));
+                        .map(se -> String.format("%s %d\n", se.getStreet().getName(), se.getGreenDuration()))
+                        .collect(Collectors.joining(""));
             fw.write(bookString);
         }
 
