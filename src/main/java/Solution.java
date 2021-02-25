@@ -1,5 +1,4 @@
-import model.InputObject;
-import model.OutputObject;
+import model.*;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.TreeMap;
@@ -11,6 +10,19 @@ public class Solution {
         final var steetCounts = getSteetCounts(inputObject);
 
         final var outputObject = new OutputObject();
+
+        for (final Intersection intsec: inputObject.getIntersections()) {
+            final var schedule = new Schedule();
+            schedule.setIntersection(intsec);
+
+            for (final Street street: intsec.getIncomingStreets()) {
+                final var sd = new StreetLightSwitchDirective(street, 1);
+                schedule.addSwitchDirective(sd);
+            }
+
+            outputObject.addSchedule(schedule);
+        }
+
         return outputObject;
     }
 
