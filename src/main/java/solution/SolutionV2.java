@@ -25,6 +25,10 @@ public class SolutionV2 implements ISolution {
             final var numOfIncomingStreets = intersection.getIncomingStreets().size();
 
             for (final Street street: intersection.getIncomingStreets()) {
+
+                final var intSummaryStatistics = inputObject.getCars().stream()
+                        .mapToInt(car -> car.getRemainingDuration(street)).summaryStatistics();
+
                 final var d = carCounts.getOrDefault(street.getName(), 0);
 
                 float duration = ((float) d) / Math.max(sum, 1) * (numOfIncomingStreets * periodPerStreet);
