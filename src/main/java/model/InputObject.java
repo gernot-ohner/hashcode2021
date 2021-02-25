@@ -18,4 +18,5 @@ public class InputObject {
     private int bonusPointsPerFinishedCar;
     private List<Street> streets;
     private List<Car> cars;
+    private List<Intersection> intersections;
 }

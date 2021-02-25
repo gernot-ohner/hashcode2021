@@ -1,14 +1,17 @@
 import model.Car;
 import model.InputObject;
+import model.Intersection;
 import model.Street;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class InputReader {
 
@@ -50,7 +53,19 @@ public class InputReader {
             );
         }).collect(Collectors.toList());
 
+        final var intersections = new ArrayList<Intersection>();
+        IntStream.range(0, numOfIntersections).forEach(i -> {
+            final var intersection = new Intersection(i,
+                    new ArrayList<>(),
+                    new ArrayList<>()
+            );
+            intersections.add(intersection);
+        });
 
+        streets.forEach(street -> {
+            intersections.get(street.getStartIntersectionId()).getOutgoingStreets().add(street);
+            intersections.get(street.getEndIntersectionId()).getIncomingStreets().add(street);
+        });
 
         final var inputObject = new InputObject();
         inputObject.setDurationInSeconds(durationInSeconds);
@@ -60,11 +75,12 @@ public class InputReader {
         inputObject.setBonusPointsPerFinishedCar(bonusPointsPerFinishedCar);
         inputObject.setStreets(streets);
         inputObject.setCars(cars);
+        inputObject.setIntersections(intersections);
         return inputObject;
     }
 
     public List<String> readFile(String filename) throws IOException, URISyntaxException {
-        final var uri = getClass()
+        @SuppressWarnings("ConstantConditions") final var uri = getClass()
                 .getClassLoader()
                 .getResource(filename)
                 .toURI();

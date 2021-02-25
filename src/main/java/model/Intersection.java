@@ -10,6 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Intersection {
+    private int id;
     private List<Street> incomingStreets;
     private List<Street> outgoingStreets;
 }
