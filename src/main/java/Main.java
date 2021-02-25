@@ -4,13 +4,18 @@ import java.net.URISyntaxException;
 public class Main {
     public static void main(String[] args) throws IOException, URISyntaxException {
 
-        String[] filenames = new String[] {
-
+        String[] filenames = new String[]{
+                "a.txt",
+                "b.txt",
+                "c.txt",
+                "d.txt",
+                "e.txt",
+                "f.txt"
         };
 
-//        for (String filename : filenames) {
-//            compute(filename);
-//        }
+        for (String filename : filenames) {
+            compute(filename);
+        }
 //        compute(filenames[3]);
     }
 
