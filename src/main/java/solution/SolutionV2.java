@@ -10,23 +10,25 @@ public class SolutionV2 implements ISolution {
     @Override
     public OutputObject compute(InputObject inputObject) {
 
-        final int periodPerStreet = 2;
+        final int periodPerStreet = 1;
 
         final var outputObject = new OutputObject();
         final var streetCounts = getStreetCounts(inputObject);
         System.out.println(streetCounts);
 
-        for (final Intersection intsec: inputObject.getIntersections()) {
+        for (final Intersection intersection: inputObject.getIntersections()) {
             final var schedule = new Schedule();
-            schedule.setIntersection(intsec);
-            final var sum = intsec.getIncomingStreets().stream().mapToInt(street ->
+            schedule.setIntersection(intersection);
+            final var sum = intersection.getIncomingStreets().stream().mapToInt(street ->
                     streetCounts.getOrDefault(street.getName(), 0)).sum();
-            final var numOfIncomingStreets = intsec.getIncomingStreets().size();
 
-            for (final Street street: intsec.getIncomingStreets()) {
+            final var numOfIncomingStreets = intersection.getIncomingStreets().size();
+
+            for (final Street street: intersection.getIncomingStreets()) {
                 final var d = streetCounts.getOrDefault(street.getName(), 0);
+
                 float duration = ((float) d) / Math.max(sum, 1) * (numOfIncomingStreets * periodPerStreet);
-                if (duration != 0) {
+                if (duration != 0 && (d * 100) > sum) {
                     final var sd = new StreetLightSwitchDirective(street, (int) Math.ceil(duration));
                     schedule.addSwitchDirective(sd);
                 }
